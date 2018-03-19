@@ -1,0 +1,36 @@
+<html>
+<title> Testing socket io</title>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		var socket = io.connect('http://localhost:3000');
+		console.log('s');
+		var timeStamp = '1';
+		var clientApp='a';
+		socket.on('connect', function(){
+			console.log('connexted');
+		})
+
+		$('#sendbutton').on('click', function(){
+            //console.log('click'); // Always see this, so no binding issue
+            socket.emit('update', clientApp+':'+timeStamp+':'+'data');
+        });
+
+	 socket.on('join_response',function(message){
+		 console.log('rec');
+		 console.log(message);
+		 $('body').css('background-color','black');
+	 })
+
+
+
+
+	})
+</script>
+<body>
+	<ul id='message'></ul>
+	<input type="text" id ="Mymessage"></input>
+	<button id ="sendbutton">SEND</button>
+</body>
+</html>
